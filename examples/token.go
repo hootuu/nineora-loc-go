@@ -7,35 +7,40 @@ import (
 	"github.com/hootuu/nineorai/domains"
 	"github.com/hootuu/nineorai/io"
 	"github.com/hootuu/nineorai/keys"
-	"github.com/hootuu/nineorai/services/network"
+	"github.com/hootuu/nineorai/services/token"
 	"time"
 )
 
-func NetworkCreate() (*network.CreateResult, *errors.Error) {
+func TokenCreate() (*token.CreateResult, *errors.Error) {
+	networkAddr, err := NetworkCreate()
+	if err != nil {
+		return nil, err
+	}
 	auth, _ := keys.NewKey()
 	wallet, _ := keys.NewKey()
-	req := io.NewRequest[network.Create](&network.Create{
-		Link:      domains.NewLink(fmt.Sprintf("VN_%d", time.Now().Unix())),
+	req := io.NewRequest[token.Create](&token.Create{
 		Authority: auth.Address(),
+		Network:   networkAddr.Address,
 		Address:   wallet.Address(),
-		Symbol:    domains.NetworkSymbol(fmt.Sprintf("VN%d", time.Now().Unix())),
+		Symbol:    domains.TokenSymbol(fmt.Sprintf("TK%d", time.Now().Unix())),
+		Decimals:  6,
 		Ctrl:      nil,
 		Tag:       nil,
 		Meta: domains.MustNewMeta().
-			MustSet(domains.MetaName, "NET aWORK").
+			MustSet(domains.MetaName, "TOKEN").
 			MustSet(domains.MetaUri, "http://xx.xx/xx.json"),
 	})
 	req.AddPayer(wallet.Address()).AddSigner(auth.Address())
 
-	err := req.Sign(auth, wallet)
+	err = req.Sign(auth, wallet)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
-	resp := nineora.Nineora().Network().Create(req)
+	resp := nineora.Nineora().Token().Create(req)
 	fmt.Println(resp.Json())
 	if !resp.Success {
-		return nil, resp.Error
+		return nil, err
 	}
 	return resp.Data, nil
 }

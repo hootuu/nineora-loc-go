@@ -20,7 +20,3 @@ func (s *NetworkService) Create(req *io.Request[network.Create]) *io.Response[ne
 	}
 	return restx.Rest[network.Create, network.CreateResult]("/networks/create", req)
 }
-
-func sayH() {
-
-}

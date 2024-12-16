@@ -14,7 +14,7 @@ func IdentityCreate() {
 	userKey, _ := keys.NewKey()
 	req := io.NewRequest[identity.Create](&identity.Create{
 		CustomID: fmt.Sprintf("AB_%d", time.Now().UnixMicro()),
-		Password: []byte("999909990"),
+		Password: domains.NewPassword("999909990"),
 		Address:  userKey.Public.Address(),
 		Ctrl: domains.MustNewCtrl().
 			MustSet(2, true).

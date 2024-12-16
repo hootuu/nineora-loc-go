@@ -17,10 +17,10 @@ type nineora struct {
 	trustee  trustee.Service
 	identity identity.Service
 	network  network.Service
-	//node     node.Service
-	//token    token.Service
-	//stake    stake.Service
-	//asset    asset.Service
+	node     node.Service
+	token    token.Service
+	stake    stake.Service
+	asset    asset.Service
 }
 
 var instance *nineora
@@ -32,10 +32,10 @@ func Nineora() services.Nineora {
 			trustee:  &servx.TrusteeService{},
 			identity: &servx.IdentityService{},
 			network:  &servx.NetworkService{},
-			//node:     &inode.Service{},
-			//token: nil,
-			//stake: nil,
-			//asset:    &iasset.Service{},
+			node:     &servx.NodeService{},
+			token:    &servx.TokenService{},
+			stake:    &servx.StakeService{},
+			asset:    &servx.AssetService{},
 		}
 	})
 	return instance
@@ -54,21 +54,17 @@ func (nineora *nineora) Network() network.Service {
 }
 
 func (nineora *nineora) Node() node.Service {
-	//TODO implement me
-	panic("implement me")
+	return nineora.node
 }
 
 func (nineora *nineora) Token() token.Service {
-	//TODO implement me
-	panic("implement me")
+	return nineora.token
 }
 
 func (nineora *nineora) Stake() stake.Service {
-	//TODO implement me
-	panic("implement me")
+	return nineora.stake
 }
 
 func (nineora *nineora) Asset() asset.Service {
-	//TODO implement me
-	panic("implement me")
+	return nineora.asset
 }
