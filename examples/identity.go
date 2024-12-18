@@ -13,6 +13,7 @@ import (
 
 func IdentityCreate() (*identity.CreateResult, *errors.Error) {
 	userKey, _ := keys.NewKey()
+	//should use trustee.Create
 	req := io.NewRequest[identity.Create](&identity.Create{
 		Link:     domains.NewLink(fmt.Sprintf("AB_%d", time.Now().UnixMicro())),
 		Password: domains.NewPassword("999909990"),
@@ -50,5 +51,5 @@ func IdentityCreate() (*identity.CreateResult, *errors.Error) {
 		return nil, getResp.Error
 	}
 	fmt.Println(getResp.Json())
-	return nil, nil
+	return resp.Data, nil
 }

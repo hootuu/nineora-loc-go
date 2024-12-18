@@ -6,6 +6,7 @@ import (
 	"github.com/hootuu/nineorai/io"
 	"github.com/hootuu/nineorai/keys"
 	"github.com/hootuu/nineorai/services/trustee"
+	"time"
 )
 
 func TrusteeCreate() {
@@ -14,6 +15,8 @@ func TrusteeCreate() {
 	fmt.Println(resp.Data.Key.Public.ToBase58())
 	fmt.Println(resp.Data.Key.Private.ToBase58())
 	fmt.Println(resp.Data.Key.Private)
+
+	trustee.NewCreate(true, fmt.Sprintf("NI%d", time.Now().Unix()), "xxxx")
 
 	req = io.NewRequest[trustee.Create](trustee.NewRandCreate(true))
 	k, _ := keys.NewKey()

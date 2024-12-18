@@ -27,6 +27,6 @@ func (t *TokenService) Mint(req *io.Request[token.Mint]) *io.Response[token.Mint
 	return restx.Rest[token.Mint, token.MintResult]("/tokens/mint", req)
 }
 
-func (t *TokenService) LoadAccountByAuthority(req *io.Request[token.LoadByAuthority]) *io.Response[token.LoadResult] {
-	return restx.Rest[token.LoadByAuthority, token.LoadResult]("/tokens/load/by/authority", req)
+func (t *TokenService) AccLoadByAuth(req *io.Request[token.AccLoadByAuth]) *io.Response[token.AccLoadResult] {
+	return restx.Rest[token.AccLoadByAuth, token.AccLoadResult]("/tokens/acc/load/by/auth", req)
 }
