@@ -12,11 +12,11 @@ import (
 func TrusteeCreate() {
 	req := io.NewRequest[trustee.Create](trustee.NewRandCreate(false))
 	resp := nineora.Nineora().Trustee().Create(req)
-	fmt.Println(resp.Data.Key.Public.ToBase58())
-	fmt.Println(resp.Data.Key.Private.ToBase58())
-	fmt.Println(resp.Data.Key.Private)
+	fmt.Println(resp.Data.Address)
 
-	trustee.NewCreate(true, fmt.Sprintf("NI%d", time.Now().Unix()), "xxxx")
+	key, _ := keys.NewKey()
+
+	trustee.NewCreate(true, fmt.Sprintf("NI%d", time.Now().Unix()), "xxxx", key)
 
 	req = io.NewRequest[trustee.Create](trustee.NewRandCreate(true))
 	k, _ := keys.NewKey()
@@ -24,9 +24,7 @@ func TrusteeCreate() {
 	_ = req.Sign(k)
 	resp = nineora.Nineora().Trustee().Create(req)
 	if resp.Success {
-		fmt.Println(resp.Data.Key.Public.ToBase58())
-		fmt.Println(resp.Data.Key.Private.ToBase58())
-		fmt.Println(resp.Data.Key.Private)
+		fmt.Println(resp.Data.Address)
 	} else {
 		fmt.Println(resp.Error)
 	}

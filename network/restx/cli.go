@@ -45,7 +45,7 @@ func Rest[REQ io.RequestData, RESP any](path string, req *io.Request[REQ]) *io.R
 }
 
 func NewClient() *resty.Client {
-	cfgBaseUrl := configure.GetString("nineora.loc.gw", "http://localhost:8080")
+	cfgBaseUrl := configure.GetString("nineora.loc.gw", "http://192.168.0.143:8080")
 	cfgRetryWaitTime := configure.GetDuration("nineora.loc.wait.retry", 2)
 	cfgRetryMaxWaitTime := configure.GetDuration("nineora.loc.wait.retry.max", 10)
 	cfgTimeout := configure.GetDuration("nineora.loc.timeout", 60)
