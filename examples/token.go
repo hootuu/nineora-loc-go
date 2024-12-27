@@ -236,5 +236,26 @@ func TokenTransfer() *errors.Error {
 		return err
 	}
 	sys.Info("to account:", toAcc.Balance)
+
+	_ = doGetTx(toAcc.Mint, toAcc.Address)
+
+	return nil
+}
+
+func doGetTx(mint keys.Address, auth keys.Address) *errors.Error {
+	req := io.NewRequest[token.TxLoad](&token.TxLoad{
+		Authority: auth,
+		Mint:      mint,
+	})
+
+	wallet := GetKey("token_test_wallet")
+	req.AddPayer(wallet.Address())
+	_ = req.Sign(wallet)
+	resp := nineora.Nineora().Token().TxLoad(req)
+	if resp.Error != nil {
+		sys.Error("token load err:", resp.Error.Error())
+		return resp.Error
+	}
+	sys.Info("load tx success =====>>>>>>>>>>>>:", resp.Data)
 	return nil
 }
