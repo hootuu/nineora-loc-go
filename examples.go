@@ -9,5 +9,7 @@ func main() {
 	//examples.TokenCreate()
 	//examples.TokenMint()
 	//examples.NodeCreate()
-	examples.Trigger()
+	//examples.Trigger()
+	//examples.TokenAccountCreate()
+	examples.TokenTransfer()
 }
