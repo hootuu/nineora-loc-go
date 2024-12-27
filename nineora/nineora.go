@@ -3,12 +3,11 @@ package nineora
 import (
 	"github.com/hootuu/nineora-loc-go/servx"
 	"github.com/hootuu/nineorai/services"
-	"github.com/hootuu/nineorai/services/asset"
 	"github.com/hootuu/nineorai/services/identity"
 	"github.com/hootuu/nineorai/services/network"
 	"github.com/hootuu/nineorai/services/node"
-	"github.com/hootuu/nineorai/services/stake"
 	"github.com/hootuu/nineorai/services/token"
+	"github.com/hootuu/nineorai/services/trigger"
 	"github.com/hootuu/nineorai/services/trustee"
 	"sync"
 )
@@ -19,8 +18,7 @@ type nineora struct {
 	network  network.Service
 	node     node.Service
 	token    token.Service
-	stake    stake.Service
-	asset    asset.Service
+	trigger  trigger.Service
 }
 
 var instance *nineora
@@ -34,8 +32,7 @@ func Nineora() services.Nineora {
 			network:  &servx.NetworkService{},
 			node:     &servx.NodeService{},
 			token:    &servx.TokenService{},
-			stake:    &servx.StakeService{},
-			asset:    &servx.AssetService{},
+			trigger:  &servx.TriggerService{},
 		}
 	})
 	return instance
@@ -61,10 +58,6 @@ func (nineora *nineora) Token() token.Service {
 	return nineora.token
 }
 
-func (nineora *nineora) Stake() stake.Service {
-	return nineora.stake
-}
-
-func (nineora *nineora) Asset() asset.Service {
-	return nineora.asset
+func (nineora *nineora) Trigger() trigger.Service {
+	return nineora.trigger
 }
